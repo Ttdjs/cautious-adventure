@@ -1,0 +1,40 @@
+#include"pch.h"
+#include"head.h"
+vector<int>merge_pre(vector<int>left, vector<int>right)
+{
+	int l = left.size();
+
+	int r = right.size();
+
+	left.push_back(INT_MAX);
+	right.push_back(INT_MAX);
+	vector<int>ans;
+	int j=0,k=0;
+	for (int i = 0; i < l + r ; i++)
+	{
+		if (left[j] < right[k])
+		{
+			ans.push_back(left[j]);
+				j++;
+		}
+		else
+		{
+			ans.push_back(right[k]);
+				k++;
+		}
+	}
+	return ans;
+}
+vector<int> merge(vector<int>&nums)
+{
+	int begin = 0;
+	int end = nums.size();
+	int mid = (begin + end) / 2;
+	if (mid == begin)
+		return nums;
+	vector<int> left(nums.begin(),nums.begin()+mid), right(nums.begin()+mid,nums.end());
+
+	vector<int> left1 = merge(left);
+	vector<int> right1 = merge(right);
+	return merge_pre(left1, right1);
+}
